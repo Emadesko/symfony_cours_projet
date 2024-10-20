@@ -8,25 +8,36 @@
         <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-blue-800"><i class="fas fa-user-plus mr-2"></i>Nouveau
                 Client</h2>
-            <form method="POST" action="{{path('client.index')}}" enctype="multipart/form-data" class="space-y-4">
+            {{ form_start(formClient,{'attr':{'class':'space-y-6'}}) }}
+             {{ form_errors(formClient)}}
+                
                 <div class="form-row flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-                    <label for="surnom" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
-                        <i class="fas fa-user mr-2"></i>Surnom
+                    <label for="" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
+                        <i class="fas fa-user mr-2"></i>{{ form_label(formClient.surnom,'Surnom')}}
                     </label>
-                    <input type="text" id="surnom" name="surnom" class="input-shadow w-full sm:flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    {{ form_widget(formClient.surnom)}}
                 </div>
+                <span class="text-red-700">
+                        {{ form_errors(formClient.surnom)}}
+                </span>
                 <div class="form-row flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-                    <label for="telephone" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
-                        <i class="fas fa-phone mr-2"></i>Téléphone
+                    <label for="" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
+                        <i class="fas fa-phone mr-2"></i>{{ form_label(formClient.telephone,'Téléphone')}}
                     </label>
-                    <input type="tel" id="telephone" name="telephone" class="input-shadow w-full sm:flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    {{ form_widget(formClient.telephone)}}
                 </div>
+                <span class="text-red-700">
+                    {{ form_errors(formClient.telephone)}}
+                </span>
                 <div class="form-row flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-                    <label for="adresse" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
-                        <i class="fas fa-map-marker-alt mr-2"></i>Adresse
+                    <label for="" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>{{ form_label(formClient.adresse,'Adresse')}}
                     </label>
-                    <input type="text" id="adresse" name="adresse" class="input-shadow w-full sm:flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    {{ form_widget(formClient.adresse)}}
                 </div>
+                <span class="text-red-700">
+                    {{ form_errors(formClient.adresse)}}
+                </span>
 
 
 
@@ -82,7 +93,7 @@
                         <i class="fas fa-save mr-2"></i>Enregistrer
                     </button>
                 </div>
-            </form>
+                {{ form_end(formClient)}}
         </div>
 
         <!-- Suivi Dette Section -->
@@ -159,5 +170,6 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/clientForm.js')}}"></script>
                 
 {% endblock %}

@@ -14,9 +14,9 @@
             <div class="flex flex-wrap justify-between items-center mb-4">
                 <!-- Filter by Phone -->
                 {{form_start(searchForm)}}
-                {{form_errors(searchForm.telephone,{"attr":{
-                    "class":"text-red-100"
-                }})}}
+                <div class="text-red-700">
+                    {{form_errors(searchForm.telephone)}}
+                </div>
                 <div class="flex items-center space-x-2">
                     {{form_widget(searchForm.telephone)}}
                     {{form_widget(searchForm.ok)}}
@@ -54,9 +54,13 @@
                                 </td>
                                 <td class="px-6 py-4">{{client.telephone}}</td>
                                 <td class="px-6 py-4">{{client.adresse}}</td>
-                                <td class="px-6 py-4">5000 FCFA</td>
+                                {% set montantDu = 0 %}
+                                {% for dette in client.dettes %}
+                                    {% set montantDu = montantDu + dette.montantRestant %}
+                                {% endfor %}
+                                <td class="px-6 py-4">{{montantDu}}</td>
                                 <td class="px-6 py-4">
-                                    <a href="{{path('dette.clientDettes')}}"><button class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+                                    <a href="{{path('dette.clientDettes')}}?id={{client.id}}"><button class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
                                         Détails
                                     </button></a>
                                 </td>

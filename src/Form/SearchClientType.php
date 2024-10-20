@@ -26,10 +26,10 @@ class SearchClientType extends AbstractType
                     'message' => 'Veuillez renseigner un numéro de téléphone.',
                 ]),
                 
-                new Regex(
-                    '/^(77|78|76)([0-9]{7})$/',
-                    'Le numéro de téléphone doit être au format 76XXXXXX ou 77XXXXXX ou 78XXXXXX'
-                )
+                // new Regex(
+                //     '/^(77|78|76)([0-9]{7})$/',
+                //     'Le numéro de téléphone doit être au format 76XXXXXX ou 77XXXXXX ou 78XXXXXX'
+                // )
 
             ]
 

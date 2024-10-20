@@ -34,7 +34,7 @@ class ClientRepository extends ServiceEntityRepository
 
         $query = $this->createQueryBuilder('c')
             ->where('c.telephone like :value')
-            ->setParameter('value',$value)
+            ->setParameter('value',$value.'%')
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit)
             ->orderBy('c.id', 'ASC')

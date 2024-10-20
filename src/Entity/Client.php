@@ -20,7 +20,7 @@ class Client
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\Regex('/(76|77|78)([0-9]{7})$/')]
+    #[Assert\Regex('/(76|77|78)([0-9]{7})$/',message:"Le numéro de téléphone doit être au format 76XXXXXX ou 77XXXXXX ou 78XXXXXX")]
     #[Assert\NotBlank(
         message:"Veuillez renseigner le téléphone"
     )]

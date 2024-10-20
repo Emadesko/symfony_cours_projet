@@ -6,26 +6,35 @@
     <div class="relative bg-white rounded-lg shadow pt-10 px-4 pb-4 w-full max-w-[95%] sm:max-w-2xl mx-auto">
         <div class="p-6 text-center border rounded-xl">
             {{ form_start(formClient,{'attr':{'class':'space-y-6'}}) }}
+             {{ form_errors(formClient)}}
                 
                 <div class="form-row flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
                     <label for="" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
                         <i class="fas fa-user mr-2"></i>{{ form_label(formClient.surnom,'Surnom')}}
                     </label>
-                    {{ form_widget(formClient.surnom,{'attr':{'class':'input-shadow w-full sm:flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'}})}}
-                    {{ form_errors(formClient.surnom,{'attr':{'class':'text-red-100'}})}}
+                    {{ form_widget(formClient.surnom)}}
                 </div>
+                <span class="text-red-700">
+                        {{ form_errors(formClient.surnom)}}
+                </span>
                 <div class="form-row flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
                     <label for="" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
                         <i class="fas fa-phone mr-2"></i>{{ form_label(formClient.telephone,'Téléphone')}}
                     </label>
-                    {{ form_widget(formClient.telephone,{'attr':{'class':'input-shadow w-full sm:flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'}})}}
+                    {{ form_widget(formClient.telephone)}}
                 </div>
+                <span class="text-red-700">
+                    {{ form_errors(formClient.telephone)}}
+                </span>
                 <div class="form-row flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
                     <label for="" class="w-full sm:w-1/4 font-semibold text-gray-700 flex items-center">
-                        <i class="fas fa-phone mr-2"></i>{{ form_label(formClient.adresse,'Adresse')}}
+                        <i class="fas fa-map-marker-alt mr-2"></i>{{ form_label(formClient.adresse,'Adresse')}}
                     </label>
-                    {{ form_widget(formClient.adresse,{'attr':{'class':'input-shadow w-full sm:flex-grow p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'}})}}
+                    {{ form_widget(formClient.adresse)}}
                 </div>
+                <span class="text-red-700">
+                    {{ form_errors(formClient.adresse)}}
+                </span>
 
 
 
@@ -84,19 +93,5 @@
                 {{ form_end(formClient)}}
         </div>
     </div>
-    <script>
-                const creerCompteToggle = document.getElementById('creerCompte');
-                const accountFields = document.getElementById('accountFields');
-                const toggleLabel = document.getElementById('toggleLabel');
-
-                creerCompteToggle.addEventListener('change', function () {
-                    if (this.checked) {
-                        accountFields.classList.remove('hidden');
-                        toggleLabel.textContent = 'Oui';
-                    } else {
-                        accountFields.classList.add('hidden');
-                        toggleLabel.textContent = 'Non';
-                    }
-                });
-        </script>
+    <script src="{{ asset('js/clientForm.js')}}"></script>
 {% endblock %}
