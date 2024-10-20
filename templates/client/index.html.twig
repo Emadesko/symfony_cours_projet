@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientController!{% endblock %}
+
+{% block main %}
+    <div>
+        <div class="bg-white rounded-lg shadow p-4 st-hover">
+            <div class="mb-4 text-xl font-bold text-black">
+                Lister Clients
+            </div>
+            <!-- Header -->
+
+            <!-- Filter and New Client Button -->
+            <div class="flex flex-wrap justify-between items-center mb-4">
+                <!-- Filter by Phone -->
+                {{form_start(searchForm)}}
+                {{form_errors(searchForm.telephone,{"attr":{
+                    "class":"text-red-100"
+                }})}}
+                <div class="flex items-center space-x-2">
+                    {{form_widget(searchForm.telephone)}}
+                    {{form_widget(searchForm.ok)}}
+                </div>
+                {{form_end(searchForm)}}
+              <!-- New Client Button -->
+                <div class="flex gap-4">
+                    <a href="{{path('client.store')}}" >
+                        <button data-modal-target="clientModal" data-modal-toggle="clientModal" class="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 mt-2 sm:mt-0">
+                            Nouveau Client
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                        <th class="px-6 py-3 text-left">PRENOM ET NOM</th>
+                        <th class="px-6 py-3 text-left">TELEPHONE</th>
+                        <th class="px-6 py-3 text-left">ADRESSE</th>
+                        <th class="px-6 py-3 text-left">MONTANT DUE</th>
+                        <th class="px-6 py-3 text-left">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        {% for client in datas %}
+                            <!-- Row 1 -->
+                            <tr class="border-t">
+                                
+                                <td class="px-6 py-4">
+                                    {% if client.user %}        
+                                        {{client.user.nom }}{{ client.user.prenom}}
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4">{{client.telephone}}</td>
+                                <td class="px-6 py-4">{{client.adresse}}</td>
+                                <td class="px-6 py-4">5000 FCFA</td>
+                                <td class="px-6 py-4">
+                                    <a href="{{path('dette.clientDettes')}}"><button class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+                                        Détails
+                                    </button></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if maxPage > 1 %}
+                <div class="flex justify-end mt-4 mb-2 sm:mb-0 space-x-2">
+                    {% if page != 1 %}
+                        <a href="?page={{ page - 1}}" class="px-3 py-1 bg-gray-300 rounded-md shadow hover:bg-gray-400">
+                            &lt;
+                        </a>
+                    {% endif %}
+                    {% for i in 1..maxPage %}
+                        <a href="?page={{i}}" class="px-3 py-1 {{ i == page ? "bg-blue-500 text-white hover:bg-blue-600": "bg-gray-300 hover:bg-gray-400"}}  rounded-md shadow ">
+                            {{i}}
+                        </a>
+                    {% endfor %}
+                    {% if page != maxPage %}
+                        <a href="?page={{ page + 1}}" class="px-3 py-1 bg-gray-300 rounded-md shadow hover:bg-gray-400">
+                            &gt;
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

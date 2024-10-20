@@ -1,0 +1,142 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}Dettes de client{% endblock %}
+
+{% block main %}
+    <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="p-4 sm:p-6 md:p-8 mb-8" style="background: linear-gradient(to right, #2b6cb0, #2d3748)">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                            <!-- Carte Total des Dettes -->
+                            <div class="stat-card rounded-lg p-4 sm:p-6 text-white font-semibold text-lg sm:text-xl md:text-2xl flex flex-col justify-between">
+                                <div class="flex flex-col justify-center space-y-4">
+                                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-8">
+                                        <img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2" alt="User Photo" class="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full">
+                                        <div class="flex flex-col justify-between h-full pb-4 text-center sm:text-left">
+                                            <p>Prenom: Ibrahima Sory</p>
+                                            <p>Nom: Diallo</p>
+                                            <p>Tel: 785619115</p>
+                                        </div>
+                                    </div>
+                                    <p class="email text-center sm:text-left">Email: sorydiallo371@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <!-- Carte Demandes en Cours -->
+                            <div class="stat-card rounded-lg p-4 sm:p-6 font-semibold text-white text-lg sm:text-xl md:text-3xl flex flex-col justify-between">
+                                <p>Montant Total: 100.000 FCFA</p>
+                                <p>Montant Versé: 55.000 FCFA</p>
+                                <p>Montant Restant: 45.000 FCFA</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-lists">
+                        <div class="product-list bg-white rounded-lg shadow p-4 mb-4">
+                            <h2 class="font-semibold mb-2">Lister les articles disponibles</h2>
+                            <input type="text" placeholder="Libelle" class="p-2 border rounded-lg w-full mb-2">
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-blue-600 text-white">
+                                        <tr>
+                                            <th class="p-2 text-center">
+                                                <i class="fas fa-check-square"></i>
+                                            </th>
+                                            <th class="p-2">Article</th>
+                                            <th class="p-2">Prix</th>
+                                            <th class="p-2">Qte en stock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="p-2 text-center">
+                                                <input type="checkbox" name="article[]" value="1" class="form-checkbox h-4 w-4 text-blue-600">
+                                            </td>
+                                            <td class="p-2">Article 1</td>
+                                            <td class="p-2">2000 CFA</td>
+                                            <td class="p-2">15</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2 text-center">
+                                                <input type="checkbox" name="article[]" value="2" class="form-checkbox h-4 w-4 text-blue-600">
+                                            </td>
+                                            <td class="p-2">Article 2</td>
+                                            <td class="p-2">3000 CFA</td>
+                                            <td class="p-2">8</td>
+                                        </tr>
+                                        <!-- Ajoutez plus d'articles selon vos besoins -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex justify-center mt-4">
+                                <button class="px-3 py-1 border rounded mr-1">&lt;</button>
+                                <button class="px-3 py-1 border rounded mr-1 bg-blue-500 text-white">1</button>
+                                <button class="px-3 py-1 border rounded mr-1">2</button>
+                                <button class="px-3 py-1 border rounded">&gt;</button>
+                            </div>
+                        </div>
+                        <div class="product-list bg-white rounded-lg shadow p-4">
+                            <div class="flex justify-between items-center mb-4 flex-wrap">
+                                <h3 class="text-xl font-bold mb-2 sm:mb-0">Liste de produits selectionné</h3>
+                            </div>
+                            <div class="mb-4 flex justify-end">
+                                <label class="block mb-2 text-lg font-medium">Total: 40.000 FCFA</label>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-blue-600 text-white">
+                                        <tr>
+                                            <th class="p-2">ARTICLE</th>
+                                            <th class="p-2">PRIX</th>
+                                            <th class="p-2">QUANTITÉ</th>
+                                            <th class="p-2">MONTANT</th>
+                                            <th class="p-2">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="p-2">Article 1</td>
+                                            <td class="p-2">2.000</td>
+                                            <td class="p-2">
+                                                <div class="flex items-center justify-center">
+                                                    <button class="px-2 py-1 bg-gray-200 rounded-l">-</button>
+                                                    <input type="text" value="1" class="w-12 text-center border-t border-b">
+                                                    <button class="px-2 py-1 bg-gray-200 rounded-r">+</button>
+                                                </div>
+                                            </td>
+                                            <td class="p-2">20.000</td>
+                                            <td><button class="text-red-500">
+                                                    <i class="fas fa-trash"></i> Supprimer
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2">Article 2</td>
+                                            <td class="p-2">3.000</td>
+                                            <td class="p-2">
+                                                <div class="flex items-center justify-center">
+                                                    <button class="px-2 py-1 bg-gray-200 rounded-l">-</button>
+                                                    <input type="text" value="1" class="w-12 text-center border-t border-b">
+                                                    <button class="px-2 py-1 bg-gray-200 rounded-r">+</button>
+                                                </div>
+                                            </td>
+                                            <td class="p-2">20.000</td>
+                                            <td><button class="text-red-500">
+                                                    <i class="fas fa-trash"></i> Supprimer
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="w-full h-12 flex justify-between mt-4 flex-wrap">
+                                <div class="flex justify-center mt-4 mb-2 sm:mb-0">
+                                    <button class="px-3 py-1 border rounded mr-1">&lt;</button>
+                                    <button class="px-3 py-1 border rounded mr-1 bg-blue-500 text-white">1</button>
+                                    <button class="px-3 py-1 border rounded mr-1">2</button>
+                                    <button class="px-3 py-1 border rounded">&gt;</button>
+                                </div>
+                                <button class="bg-blue-500 text-white px-3 rounded mt-2 sm:mt-0">SAVE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
