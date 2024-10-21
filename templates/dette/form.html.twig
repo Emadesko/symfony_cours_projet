@@ -1,34 +1,9 @@
-{% extends 'base.html.twig'%}
+{% extends 'dette/clientDettes.html.twig'%}
 
-{% block title %}Dettes de client{% endblock %}
+{% block title %}Form dette{% endblock %}
 
-{% block main %}
-    <div class="bg-white p-6 rounded-lg shadow-md">
-        <div class="p-4 sm:p-6 md:p-8 mb-8" style="background: linear-gradient(to right, #2b6cb0, #2d3748)">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                <!-- Carte Total des Dettes -->
-                <div class="stat-card rounded-lg p-4 sm:p-6 text-white font-semibold text-lg sm:text-xl md:text-2xl flex flex-col justify-between">
-                    <div class="flex flex-col justify-center space-y-4">
-                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-8">
-                            <img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2" alt="User Photo" class="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full">
-                            <div class="flex flex-col justify-between h-full pb-4 text-center sm:text-left">
-                                <p>Prenom: Ibrahima Sory</p>
-                                <p>Nom: Diallo</p>
-                                <p>Tel: 785619115</p>
-                            </div>
-                        </div>
-                        <p class="email text-center sm:text-left">Email: sorydiallo371@gmail.com</p>
-                    </div>
-                </div>
-
-                <!-- Carte Demandes en Cours -->
-                <div class="stat-card rounded-lg p-4 sm:p-6 font-semibold text-white text-lg sm:text-xl md:text-3xl flex flex-col justify-between">
-                    <p>Montant Total: 100.000 FCFA</p>
-                    <p>Montant Versé: 55.000 FCFA</p>
-                    <p>Montant Restant: 45.000 FCFA</p>
-                </div>
-            </div>
-        </div>
+{% block change %}
+    
         <div class="product-lists">
             <div class="product-list bg-white rounded-lg shadow p-4 mb-4">
                 <h2 class="font-semibold mb-2">Lister les articles disponibles</h2>
@@ -138,5 +113,4 @@
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}

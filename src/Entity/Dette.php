@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DetteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DetteRepository::class)]
@@ -32,10 +34,17 @@ class Dette
     #[ORM\Column]
     private ?\DateTimeImmutable $updateAt = null;
 
+    /**
+     * @var Collection<int, Details>
+     */
+    #[ORM\OneToMany(targetEntity: Details::class, mappedBy: 'dette', orphanRemoval: true)]
+    private Collection $details;
+
     public function __construct()
     {
         $this->setUpdateAt(new \DateTimeImmutable());
         $this->setCreateAt(new \DateTimeImmutable());
+        $this->details = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +120,36 @@ class Dette
     public function setUpdateAt(\DateTimeImmutable $updateAt): static
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Details>
+     */
+    public function getDetails(): Collection
+    {
+        return $this->details;
+    }
+
+    public function addDetail(Details $detail): static
+    {
+        if (!$this->details->contains($detail)) {
+            $this->details->add($detail);
+            $detail->setDette($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetail(Details $detail): static
+    {
+        if ($this->details->removeElement($detail)) {
+            // set the owning side to null (unless already changed)
+            if ($detail->getDette() === $this) {
+                $detail->setDette(null);
+            }
+        }
 
         return $this;
     }

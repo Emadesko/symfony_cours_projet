@@ -32,42 +32,48 @@
                 </div>
             </div>
             <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead class="bg-blue-600 text-white">
-                        <tr>
-                        <th class="px-6 py-3 text-left">PRENOM ET NOM</th>
-                        <th class="px-6 py-3 text-left">TELEPHONE</th>
-                        <th class="px-6 py-3 text-left">ADRESSE</th>
-                        <th class="px-6 py-3 text-left">MONTANT DUE</th>
-                        <th class="px-6 py-3 text-left">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-700">
-                        {% for client in datas %}
-                            <!-- Row 1 -->
-                            <tr class="border-t">
-                                
-                                <td class="px-6 py-4">
-                                    {% if client.user %}        
-                                        {{client.user.nom }}{{ client.user.prenom}}
-                                    {% endif %}
-                                </td>
-                                <td class="px-6 py-4">{{client.telephone}}</td>
-                                <td class="px-6 py-4">{{client.adresse}}</td>
-                                {% set montantDu = 0 %}
-                                {% for dette in client.dettes %}
-                                    {% set montantDu = montantDu + dette.montantRestant %}
-                                {% endfor %}
-                                <td class="px-6 py-4">{{montantDu}}</td>
-                                <td class="px-6 py-4">
-                                    <a href="{{path('dette.clientDettes')}}?id={{client.id}}"><button class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
-                                        Détails
-                                    </button></a>
-                                </td>
+                {% if datas is not empty%}
+                    <table class="min-w-full">
+                        <thead class="bg-blue-600 text-white">
+                            <tr>
+                            <th class="px-6 py-3 text-left">PRENOM ET NOM</th>
+                            <th class="px-6 py-3 text-left">TELEPHONE</th>
+                            <th class="px-6 py-3 text-left">ADRESSE</th>
+                            <th class="px-6 py-3 text-left">MONTANT DUE</th>
+                            <th class="px-6 py-3 text-left">ACTION</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            {% for client in datas %}
+                                <!-- Row 1 -->
+                                <tr class="border-t">
+                                    
+                                    <td class="px-6 py-4">
+                                        {% if client.user %}        
+                                            {{client.user.nom }}{{ client.user.prenom}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4">{{client.telephone}}</td>
+                                    <td class="px-6 py-4">{{client.adresse}}</td>
+                                    {% set montantDu = 0 %}
+                                    {% for dette in client.dettes %}
+                                        {% set montantDu = montantDu + dette.montantRestant %}
+                                    {% endfor %}
+                                    <td class="px-6 py-4">{{montantDu}}</td>
+                                    <td class="px-6 py-4">
+                                        <a href="{{path('dette.clientDettes')}}?id={{client.id}}"><button class="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+                                            Détails
+                                        </button></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="flex justify-center items-center">   
+                        Aucun client 
+                    </div>
+                {% endif %}
             </div>
             {% if maxPage > 1 %}
                 <div class="flex justify-end mt-4 mb-2 sm:mb-0 space-x-2">

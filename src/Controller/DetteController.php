@@ -4,23 +4,30 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\ClientType;
-use App\Repository\ClientRepository;
+use App\Form\SearchClientType;
 use App\Repository\DetteRepository;
+use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DetteController extends AbstractController
 {
     #[Route('/dette', name: 'dette.index')]
-    public function index(EntityManagerInterface $entityManager,Request $request): Response
+    public function index(EntityManagerInterface $entityManager,Request $request,ClientRepository $clientRepository): Response
     {
         $client=new Client();
-        $form=$this->createForm(ClientType::class,$client);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $clientForm=$this->createForm(ClientType::class,$client);
+        $clientForm->handleRequest($request);
+        $searchForm=$this->createForm(SearchClientType::class);
+        $searchForm->handleRequest($request);
+        $clientSearched=null;
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $clientSearched = $clientRepository->findOneBy(['telephone'=>$searchForm->getData()['telephone']]);
+        }
+        if ($clientForm->isSubmitted() && $clientForm->isValid()) {
             # code...
             // if ($request->query->get("login")!="") {
                 //     $user=new User();
@@ -39,7 +46,9 @@ class DetteController extends AbstractController
         }
         return $this->render('dette/index.html.twig', [
             'controller_name' => 'DetteController',
-            'formClient'=>$form->createView()
+            'formClient'=>$clientForm->createView(),
+            'searchForm'=>$searchForm->createView(),
+            'client'=> $clientSearched,
         ]);
     }
 
@@ -53,7 +62,6 @@ class DetteController extends AbstractController
         $montant=$detteRepository->getTotalMontant($client->getId());
         $montantVerser=$detteRepository->getTotalMontantVerser($client->getId());
         $dettes=$detteRepository->paginateDettes($page,$limit,$client->getId(),$type);
-
         $count = $dettes->count();
         $maxPage = ceil($count / $limit);
         return $this->render('dette/clientDettes.html.twig', [
@@ -69,10 +77,17 @@ class DetteController extends AbstractController
     }
 
     #[Route('/dette/store', name: 'dette.store')]
-    public function store(): Response
+    public function store(ClientRepository $clientRepository,DetteRepository $detteRepository,Request $request): Response
     {
+        $client=$clientRepository->find($request->get("id"));
+        $montant=$detteRepository->getTotalMontant($client->getId());
+        $montantVerser=$detteRepository->getTotalMontantVerser($client->getId());
         return $this->render('dette/form.html.twig', [
             'controller_name' => 'DetteController',
+            'client'=>$client,
+            'total'=>$montant,
+            'verser'=>$montantVerser,
+            'du'=>$montant-$montantVerser,
         ]);
     }
 }

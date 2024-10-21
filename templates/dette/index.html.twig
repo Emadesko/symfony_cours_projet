@@ -101,27 +101,33 @@
             <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-blue-800">
                 <i class="fas fa-search-dollar mr-2"></i>Suivi de Dette
             </h2>
-            <form class="mb-4 flex flex-col sm:flex-row gap-2" method="POST" action="#">
-                <input type="hidden" name="action" value="searchClient">
-                <label for="telephone" class="w-full sm:w-auto flex-shrink-0 font-semibold text-gray-700 flex items-center">
-                    <i class="fas fa-phone mr-2"></i>Tél :
-                </label>
-                <input type="tel" id="telephone" name="telephone" class="input-shadow flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                <button type="submit" class="btn bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-2 sm:mt-0">
-                    <i class="fas fa-search mr-2"></i>OK
-                </button>
-            </form>
+            {{form_start(searchForm,{'attr':{
+                'class': "mb-4 sm:flex-row gap-2"
+                }})}}
+                <div class="text-red-700">
+                    {{form_errors(searchForm.telephone)}}
+                </div>
+                <div class= "flex flex-col">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-phone mr-2"></i>Tél :{{form_widget(searchForm.telephone)}}
+                        {{form_widget(searchForm.ok,{'attr':{
+                            'class': "btn bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-2 sm:mt-0"
+                        }})}}
+                    </div>
+                </div>
+               
+            {{form_end(searchForm)}}
             <!-- Boutons organisés et centrés -->
             <div class="mb-4 flex flex-wrap justify-start gap-4 sm:gap-2">
                 <button class="bg-red-500 text-white px-4 py-2 rounded flex items-center">
                     <i class="fas fa-user mr-2"></i>Infos
                 </button>
-                <a href="../Boutiquier/listDettesClient.html" class="flex">
+                <a href="{% if client %} {{ path('dette.clientDettes',{'id': client.id})}} {% endif %}" class="flex">
                     <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded flex items-center">
                         <i class="fas fa-file-invoice-dollar mr-2"></i>Dettes
                     </button>
                 </a>
-                <a href="{{path( 'dette.store')}}" class="flex">
+                <a href="{% if client %} {{ path('dette.store',{'id': client.id})}} {% endif %}"class="flex">
                     <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded flex items-center">
                         <i class="fas fa-plus mr-2"></i>Nouvelle
                     </button>
@@ -143,19 +149,19 @@
                             <label for="nom" class="block font-semibold text-gray-700 mb-1">
                                 <i class="fas fa-user mr-2"></i>Nom :
                             </label>
-                            <input type="text" id="nom" name="nom" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <input type="text" id="nom" name="nom" readonly class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="{{client ? client.user ? client.user.nom: "":"" }}">
                         </div>
                         <div class="mb-2">
                             <label for="prenom" class="block font-semibold text-gray-700 mb-1">
                                 <i class="fas fa-user mr-2"></i>Prénom :
                             </label>
-                            <input type="text" id="prenom" name="prenom" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <input type="text" id="prenom" name="prenom" readonly class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="{{client ? client.user ? client.user.prenom: "":"" }}">
                         </div>
                         <div class="mb-2">
                             <label for="adresse" class="block font-semibold text-gray-700 mb-1">
                                 <i class="fas fa-map-marker-alt mr-2"></i>Adresse :
                             </label>
-                            <input type="text" id="adresse" name="adresse" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <input type="text" id="adresse" name="adresse" readonly class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="{{ client ? client.adresse: "" }}">
                         </div>
                     </div>
 
