@@ -52,30 +52,7 @@ class DetteController extends AbstractController
         ]);
     }
 
-    #[Route('/dette/clientDettes', name: 'dette.clientDettes')]
-    public function clientDettes(Request $request,ClientRepository $clientRepository,DetteRepository $detteRepository): Response
-    {
-        $page = $request->query->getInt('page', 1);
-        $type = $request->query->getString('type', "all");
-        $limit = 5;
-        $client=$clientRepository->find($request->get("id"));
-        $montant=$detteRepository->getTotalMontant($client->getId());
-        $montantVerser=$detteRepository->getTotalMontantVerser($client->getId());
-        $dettes=$detteRepository->paginateDettes($page,$limit,$client->getId(),$type);
-        $count = $dettes->count();
-        $maxPage = ceil($count / $limit);
-        return $this->render('dette/clientDettes.html.twig', [
-            'controller_name' => 'DetteController',
-            'client' => $client,
-            'dettes' => $dettes,
-            'total'=>$montant,
-            'verser'=>$montantVerser,
-            'du'=>$montant-$montantVerser,
-            'page' => $page,
-            'maxPage' => $maxPage,
-        ]);
-    }
-
+   
     #[Route('/dette/store', name: 'dette.store')]
     public function store(ClientRepository $clientRepository,DetteRepository $detteRepository,Request $request): Response
     {

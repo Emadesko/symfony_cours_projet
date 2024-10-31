@@ -35,9 +35,9 @@
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold">Liste des dettes</h2>
                         <div class="mt-4">
-                            <a href="?id={{ client.id }}" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Toutes</a>
-                            <a href="?id={{ client.id }}&type=non_soldé" class="bg-red-500 text-white px-4 py-2 rounded mr-2">Non soldées</a>
-                            <a href="?id={{ client.id }}&type=soldé" class="bg-blue-500 text-white px-4 py-2 rounded mt-2 sm:mt-0">Soldées</a>
+                            <a href="{{path('client.dettes',{idClient : client.id})}}?statut=all" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Toutes</a>
+                            <a href="{{path('client.dettes',{idClient : client.id})}}?statut=non_soldé" class="bg-red-500 text-white px-4 py-2 rounded mr-2">Non soldées</a>
+                            <a href="{{path('client.dettes',{idClient : client.id})}}?statut=soldé" class="bg-blue-500 text-white px-4 py-2 rounded mt-2 sm:mt-0">Soldées</a>
                         </div>
                     </div>
                     {% if dettes is not empty %}
@@ -75,17 +75,17 @@
                 {% if maxPage > 1 %}
                     <div class="flex justify-end mt-4 mb-2 sm:mb-0 space-x-2">
                         {% if page != 1 %}
-                            <a href="?id={{ client.id }}&page={{ page - 1}}" class="px-3 py-1 bg-gray-300 rounded-md shadow hover:bg-gray-400">
+                            <a href="{{path('client.dettes',{idClient : client.id})}}?page={{ page - 1}} {{statut != "" ? "&statut=" ~ statut : ""}}" class="px-3 py-1 bg-gray-300 rounded-md shadow hover:bg-gray-400">
                                 &lt;
                             </a>
                         {% endif %}
                         {% for i in 1..maxPage %}
-                            <a href="?id={{ client.id }}&page={{i}}" class="px-3 py-1 {{ i == page ? "bg-blue-500 text-white hover:bg-blue-600": "bg-gray-300 hover:bg-gray-400"}}  rounded-md shadow ">
+                            <a href="{{path('client.dettes',{idClient : client.id})}}?page={{i}} {{statut != "" ? "&statut=" ~ statut : ""}}" class="px-3 py-1 {{ i == page ? "bg-blue-500 text-white hover:bg-blue-600": "bg-gray-300 hover:bg-gray-400"}}  rounded-md shadow ">
                                 {{i}}
                             </a>
                         {% endfor %}
                         {% if page != maxPage %}
-                            <a href="?id={{ client.id }}&page={{ page + 1}}" class="px-3 py-1 bg-gray-300 rounded-md shadow hover:bg-gray-400">
+                            <a href="{{path('client.dettes',{idClient : client.id})}}?page={{ page + 1}} {{statut != "" ? "&statut=" ~ statut : ""}}" class="px-3 py-1 bg-gray-300 rounded-md shadow hover:bg-gray-400">
                                 &gt;
                             </a>
                         {% endif %}

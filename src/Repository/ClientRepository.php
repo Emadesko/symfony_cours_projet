@@ -19,29 +19,20 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
-    public function paginateClients(int $page, int $limit): Paginator
+    public function paginateClients(int $page, int $limit,string $value=""): Paginator
     {
 
-        $query = $this->createQueryBuilder('c')
-            ->setFirstResult(($page - 1) * $limit)
+        $query = $this->createQueryBuilder('c');
+        if ($value != "") {
+            $query->where('c.telephone like :value')
+                ->setParameter('value',$value.'%');
+        }
+        $query->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit)
             ->orderBy('c.id', 'ASC')
             ->getQuery();
         return new Paginator($query);
     }
-    public function paginateClientsBy(int $page, int $limit,string $value): Paginator
-    {
-
-        $query = $this->createQueryBuilder('c')
-            ->where('c.telephone like :value')
-            ->setParameter('value',$value.'%')
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit)
-            ->orderBy('c.id', 'ASC')
-            ->getQuery();
-        return new Paginator($query);
-    }
-
 //    /**
 //     * @return Client[] Returns an array of Client objects
 //     */

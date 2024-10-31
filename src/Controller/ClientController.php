@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Form\SearchClientType;
+use App\Repository\DetteRepository;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,16 +24,43 @@ class ClientController extends AbstractController
         $form=$this->createForm(SearchClientType::class);
         $form->handleRequest($request);
         $clients=[];
-        if ($form->isSubmitted() && $form->isValid()) {
-            $clients = $clientRepository->paginateClientsBy($page,$limit,$form->get('telephone')->getData());
-        }else{
-            $clients = $clientRepository->paginateClients($page,$limit);
+        $telephone=$request->get('telephone',"");
+        if ($request->query->has('search_client')) {
+            $page=1;
+            $telephone=$request->query->all('search_client')['telephone'];
         }
+        $clients = $clientRepository->paginateClients($page,$limit,$telephone);
         $count = $clients->count();
         $maxPage = ceil($count / $limit);
         return $this->render('client/index.html.twig', [
             'datas' => $clients,
+            'telephone' => $telephone,
             'searchForm' => $form->createView(),
+            'page' => $page,
+            'maxPage' => $maxPage,
+        ]);
+    }
+
+    #[Route('/client/dettes/{idClient}', name: 'client.dettes')]
+    public function clientDettes(Request $request,ClientRepository $clientRepository,DetteRepository $detteRepository,int $idClient): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $statut = $request->query->getString('statut', "all");
+        $limit = 2;
+        $client=$clientRepository->find($idClient);
+        $montant=$detteRepository->getTotalMontant($client->getId());
+        $montantVerser=$detteRepository->getTotalMontantVerser($client->getId());
+        $dettes=$detteRepository->paginateDettes($page,$limit,$client->getId(),$statut);
+        $count = $dettes->count();
+        $maxPage = ceil($count / $limit);
+        return $this->render('client/dette.html.twig', [
+            'controller_name' => 'DetteController',
+            'client' => $client,
+            'dettes' => $dettes,
+            'total'=>$montant,
+            'verser'=>$montantVerser,
+            'du'=>$montant-$montantVerser,
+            'statut'=>$statut,
             'page' => $page,
             'maxPage' => $maxPage,
         ]);

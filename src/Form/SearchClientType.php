@@ -22,9 +22,9 @@ class SearchClientType extends AbstractType
                 'class' => 'p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none w-auto',
             ],
             'constraints' => [
-                new NotBlank([
-                    'message' => 'Veuillez renseigner un numéro de téléphone.',
-                ]),
+                // new NotBlank([
+                //     'message' => 'Veuillez renseigner un numéro de téléphone.',
+                // ]),
                 
                 // new Regex(
                 //     '/^(77|78|76)([0-9]{7})$/',
